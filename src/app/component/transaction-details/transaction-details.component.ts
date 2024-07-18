@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '../../service/transaction.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Transaction } from 'src/app/shared/model/transaction';
 
 @Component({
   selector: 'app-transaction-detail',
   templateUrl: './transaction-details.component.html',
-  styleUrls: ['./transaction-details.component.scss']
+  styleUrls: ['./transaction-details.component.css']
 })
-export class TransactionDetailComponent implements OnInit {
+export class TransactionDetailComponent  implements OnInit{
   transactionForm!: FormGroup;
-  transaction: any;
+  transaction!: Transaction;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,12 +21,20 @@ export class TransactionDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.transactionService.getTransactions('2020-01-01', '2020-12-31').subscribe(data => {
-      this.transaction = data.find((t: { id: string | null; }) => t.id === id);
-      this.createForm();
-    });
+    //const id = this.route.snapshot.paramMap.get('id');
+    // this.transactionService.getTransactions('2020-01-01', '2020-12-31').subscribe(data => {
+    //   this.transaction = data.find((t: { id: string | null; }) => t.id === id);
+this.route.params.subscribe((params)=>{
+  if(params['id'])
+    {
+    this.transaction= this.transactionService.getTransactionById(params['id']);
   }
+});
+this.createForm();
+}
+ 
+
+      
 
   createForm() {
     this.transactionForm = this.fb.group({

@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { TransactionListComponent } from './component/transaction-list/transaction-list.component';
 import { TransactionDetailComponent } from './component/transaction-details/transaction-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TransactionService } from './service/transaction.service';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,9 +17,10 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [TransactionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
